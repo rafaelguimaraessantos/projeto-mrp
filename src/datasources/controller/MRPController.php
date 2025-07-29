@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../services/MRPService.php';
+require_once __DIR__ . '/../service/MRPService.php';
 
 class MRPController {
     private $mrpService;

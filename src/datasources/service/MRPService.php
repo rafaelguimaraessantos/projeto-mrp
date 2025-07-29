@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../models/MRP.php';
+require_once __DIR__ . '/../model/MRP.php';
+require_once __DIR__ . '/../config/Container.php';
+require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/EstoqueService.php';
 
 class MRPService {

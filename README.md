@@ -62,27 +62,16 @@ projeto-mrp/
 │       └── my.cnf          # Configuração MySQL UTF-8
 └── src/
     ├── index.html          # Página principal
-    ├── .htaccess          # Configuração de rotas
     ├── frontend/
     │   └── app.js         # Controlador Angular
-    └── backend/
-        ├── api/
-        │   ├── estoque.php  # API Estoque
-        │   └── mrp.php      # API MRP
-        ├── config/
-        │   ├── database.php # Configuração DB
-        │   └── Container.php # Container DI
-        ├── controllers/
-        │   ├── EstoqueController.php # Controller Estoque
-        │   └── MRPController.php     # Controller MRP
-        ├── models/
-        │   ├── Estoque.php  # Modelo Estoque
-        │   └── MRP.php      # Modelo MRP
-        ├── services/
-        │   ├── EstoqueService.php # Service Estoque
-        │   └── MRPService.php     # Service MRP
-        └── utils/
-            └── EncodingUtils.php # Utilitário de Encoding
+    ├── datasources/
+    │   ├── api/         # Endpoints e rotas de API (PHP)
+    │   ├── service/     # Serviços de negócio (PHP)
+    │   ├── controller/  # Controllers (PHP)
+    │   ├── model/       # Modelos de dados (PHP)
+    │   ├── utils/       # Utilitários (PHP)
+    │   ├── config/      # Configurações e DI (PHP)
+    │   └── teste/       # Testes automatizados (PHP, JS)
 ```
 
 ## 🚀 Pré-requisitos
@@ -189,6 +178,7 @@ O sistema trata automaticamente singular/plural nos componentes:
 - URLs sem hash (#): `/estoque`, `/mrp`
 - APIs separadas: `/api/estoque`, `/api/mrp`
 - Roteamento inteligente: Frontend serve `index.html`, APIs servem JSON
+- Roteamento configurado via Nginx: Frontend serve `index.html`, APIs servem JSON
 
 ## 🔧 Configuração do Banco de Dados
 
@@ -231,6 +221,7 @@ curl -X POST http://localhost:8081/api/mrp \
 ## 📝 Desenvolvimento
 
 ### Para fazer alterações no código:
+  - Testes unitários e de integração devem ser colocados em `src/tests`.
 1. Os arquivos estão mapeados nos volumes do Docker
 2. Alterações são refletidas automaticamente
 3. Recarregue a página no navegador
@@ -245,6 +236,9 @@ docker-compose exec mysql mysql -u mrp_user -p mrp_db
 - **Dependency Injection**: Container para gerenciar dependências
 - **REST APIs**: Endpoints separados para estoque e MRP
 - **Clean URLs**: URLs sem hash (#) usando HTML5 mode
+
+### Segurança
+As pastas sensíveis de backend estão protegidas pelo Nginx e não podem ser acessadas diretamente via web.
 
 ## 🎯 Critérios de Avaliação Atendidos
 

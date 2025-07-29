@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# Proteger pastas sensíveis
+RewriteRule ^datasources/(config|service|model|utils|teste|controller)/ - [F,L]
+
+# Rotas de API (devem vir antes das condições de arquivo!)
+RewriteRule ^api/estoque/?$ datasources/api/estoque.php [L,QSA]
+RewriteRule ^api/mrp/?$ datasources/api/mrp.php [L,QSA]
+
+# Permitir acesso direto aos arquivos estáticos
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Redirecionar todas as outras requisições para index.html (SPA)
+RewriteRule ^(.*)$ index.html [L]
+
+# Configurações para HTML5 mode
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options DENY
+    Header always set X-Content-Type-Options nosniff
+</IfModule> 

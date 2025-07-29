@@ -1,6 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../models/Estoque.php';
+require_once __DIR__ . '/../model/Estoque.php';
+require_once __DIR__ . '/../config/Container.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../utils/EncodingUtils.php';
 
 class EstoqueService {
     private $estoque;

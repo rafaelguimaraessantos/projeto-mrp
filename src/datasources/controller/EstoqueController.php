@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../services/EstoqueService.php';
+require_once __DIR__ . '/../service/EstoqueService.php';
 
 class EstoqueController {
     private $estoqueService;

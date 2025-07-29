@@ -8,30 +8,31 @@
 src/
 ├── frontend/           # VIEW (AngularJS)
 │   └── app.js         # Controlador Angular
-├── backend/
-│   ├── models/        # MODEL (Acesso a Dados)
-│   │   ├── Estoque.php
-│   │   └── MRP.php
-│   ├── services/      # SERVICES (Lógica de Negócio)
-│   │   ├── EstoqueService.php
-│   │   └── MRPService.php
-│   ├── controllers/   # CONTROLLER (Controle de Requisições)
-│   │   ├── EstoqueController.php
-│   │   └── MRPController.php
+├── datasources/
 │   ├── api/          # Endpoints REST
 │   │   ├── estoque.php
 │   │   └── mrp.php
+│   ├── service/      # SERVICES (Lógica de Negócio)
+│   │   ├── EstoqueService.php
+│   │   └── MRPService.php
+│   ├── controller/   # CONTROLLER (Controle de Requisições)
+│   │   ├── EstoqueController.php
+│   │   └── MRPController.php
+│   ├── model/        # MODEL (Acesso a Dados)
+│   │   ├── Estoque.php
+│   │   └── MRP.php
 │   ├── config/       # Configurações
 │   │   ├── database.php
 │   │   └── Container.php
-│   └── utils/        # Utilitários
-│       └── EncodingUtils.php
+│   ├── utils/        # Utilitários
+│   │   └── EncodingUtils.php
+│   └── teste/        # Testes automatizados
 └── index.html        # VIEW (Interface Principal)
 ```
 
 ## 🎯 **Separação de Responsabilidades**
 
-### **1. MODEL (src/backend/models/)**
+### **1. MODEL (src/datasources/model/)**
 **Responsabilidade**: Acesso a dados e persistência
 
 #### ✅ **Estoque.php**
@@ -58,7 +59,7 @@ class MRP {
 }
 ```
 
-### **2. SERVICES (src/backend/services/)**
+### **2. SERVICES (src/datasources/service/)**
 **Responsabilidade**: Lógica de negócio e regras da aplicação
 
 #### ✅ **EstoqueService.php**
@@ -85,7 +86,7 @@ class MRPService {
 }
 ```
 
-### **3. CONTROLLER (src/backend/controllers/)**
+### **3. CONTROLLER (src/datasources/controller/)**
 **Responsabilidade**: Processar requisições HTTP e coordenar Services
 
 #### ✅ **EstoqueController.php**
@@ -281,3 +282,32 @@ public function create($componente_id, $quantidade) {
 - ✅ **Padrões de projeto aplicados**
 
 O sistema está bem estruturado e pronto para evolução! 🚀 
+
+## 🌐 **Configuração de Roteamento**
+
+### **Nginx Configuration**
+O sistema utiliza Nginx para roteamento inteligente:
+
+```nginx
+# Rotas de API
+location /api/estoque {
+    try_files $uri $uri/ /datasources/api/estoque.php?$query_string;
+    fastcgi_pass php:9000;
+}
+
+location /api/mrp {
+    try_files $uri $uri/ /datasources/api/mrp.php?$query_string;
+    fastcgi_pass php:9000;
+}
+
+# Rotas do frontend (SPA)
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
+
+### **Vantagens da Configuração Nginx**
+- **Performance**: Roteamento direto sem processamento de .htaccess
+- **Segurança**: Controle granular de acesso a pastas sensíveis
+- **Escalabilidade**: Configuração centralizada e otimizada
+- **Flexibilidade**: Suporte a múltiplos tipos de requisição 

@@ -37,8 +37,11 @@ class Container {
      */
     public static function configure() {
         // Registrar serviços
-        require_once __DIR__ . '/../services/EstoqueService.php';
-        require_once __DIR__ . '/../services/MRPService.php';
+        require_once __DIR__ . '/../service/EstoqueService.php';
+        require_once __DIR__ . '/../service/MRPService.php';
+        require_once __DIR__ . '/../model/Estoque.php';
+        require_once __DIR__ . '/../model/MRP.php';
+        require_once __DIR__ . '/../utils/EncodingUtils.php';
         
         self::register('estoqueService', new EstoqueService());
         self::register('mrpService', new MRPService());
