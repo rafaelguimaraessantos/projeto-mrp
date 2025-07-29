@@ -1,0 +1,23 @@
+RewriteEngine On
+
+# Habilitar mod_rewrite
+Options +FollowSymLinks
+
+# Redirecionar /estoque para o endpoint de estoque
+RewriteRule ^estoque/?$ backend/api/estoque.php [L,QSA]
+
+# Redirecionar /mrp para o endpoint de MRP
+RewriteRule ^mrp/?$ backend/api/mrp.php [L,QSA]
+
+# Permitir acesso direto aos arquivos estáticos
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirecionar todas as outras requisições para index.html (SPA)
+RewriteRule ^(.*)$ index.html [L]
+
+# Configurações para HTML5 mode
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options DENY
+    Header always set X-Content-Type-Options nosniff
+</IfModule> 

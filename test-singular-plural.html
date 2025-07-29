@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Singular/Plural</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="testApp" ng-controller="TestController">
+    <h1>Teste de Singular/Plural</h1>
+    
+    <div>
+        <h3>Exemplos:</h3>
+        <ul>
+            <li ng-repeat="teste in testes">
+                {{ teste.quantidade }} {{ formatarComponente(teste.quantidade, teste.componente) }}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        angular.module('testApp', [])
+        .controller('TestController', function($scope) {
+            // Função para tratar singular/plural dos componentes
+            $scope.formatarComponente = function(quantidade, componente) {
+                // Mapeamento de componentes para singular
+                var singularMap = {
+                    'Quadros': 'Quadro',
+                    'Rodas': 'Roda',
+                    'Guidões': 'Guidão',
+                    'Gabinetes': 'Gabinetes',
+                    'Placas-mãe': 'Placa-mãe',
+                    'Memórias RAM': 'Memória RAM'
+                };
+                
+                // Se quantidade é 1, usar singular
+                if (quantidade === 1) {
+                    return singularMap[componente] || componente;
+                }
+                
+                // Se quantidade > 1, usar plural (nome original)
+                return componente;
+            };
+
+            // Dados de teste
+            $scope.testes = [
+                { quantidade: 1, componente: 'Quadros' },
+                { quantidade: 2, componente: 'Quadros' },
+                { quantidade: 1, componente: 'Rodas' },
+                { quantidade: 3, componente: 'Rodas' },
+                { quantidade: 1, componente: 'Guidões' },
+                { quantidade: 5, componente: 'Guidões' },
+                { quantidade: 1, componente: 'Gabinetes' },
+                { quantidade: 2, componente: 'Gabinetes' },
+                { quantidade: 1, componente: 'Placas-mãe' },
+                { quantidade: 4, componente: 'Placas-mãe' },
+                { quantidade: 1, componente: 'Memórias RAM' },
+                { quantidade: 6, componente: 'Memórias RAM' }
+            ];
+        });
+    </script>
+</body>
+</html> 
